@@ -1,7 +1,5 @@
-#🤖CybSec🤖
+# 🤖CybSec🤖
 
-##Architecture:
-![Logo](https://ibb.co/3TJMdV5)
+This is a tool designed to assist cybersecurity analysts in analyzing IPDR data and investigating potential network anomalies using LLM.
 
-
-
+![Architecture Diagram](https://i.ibb.co/3TJMdV5/architecture-diagram.png)
