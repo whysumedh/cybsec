@@ -51,29 +51,14 @@ PINATA_JWT = os.getenv("PINATA_JWT")
 PINATA_BASE_URL = "https://api.pinata.cloud"
 EXA_API_KEY = os.getenv("EXA_API_KEY")
 FB_KEY=os.getenv("FB_API_KEY")
-# Web3 setup
-# WEB3_PROVIDER_URL = os.getenv("WEB3_PROVIDER_URL")
-# web3 = Web3(Web3.HTTPProvider(WEB3_PROVIDER_URL))
 
-# # Set up OpenAI client
-# AI71_BASE_URL = "https://api.ai71.ai/v1/"
-# AI71_API_KEY = ""
-# client = openai.OpenAI(
-#     api_key=AI71_API_KEY,
-#     base_url=AI71_BASE_URL,
-# )
 
 client = Together(api_key=os.environ.get("TOGETHER_API_KEY"))
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# if not firebase_admin._apps:
-#     cred = credentials.Certificate("creds.json")
-#     firebase_admin.initialize_app(cred, {
-#         'databaseURL': 'https://cybsec-92fe2-default-rtdb.firebaseio.com/',
-#         'storageBucket': 'cybsec-92fe2.appspot.com'
-#     })
+
 
 if not firebase_admin._apps:
     # Load Firebase credentials from environment variable
@@ -89,26 +74,13 @@ if not firebase_admin._apps:
         'storageBucket': 'cybsec-92fe2.appspot.com'
     })
 
-# Initialize Firestore (if you're using Firestore instead of Realtime Database)
 db = firestore.client()
 realtime_ref = realtime_db.reference()
 
 bucket = storage.bucket()
 
 
-# Firebase Configuration
-# firebaseConfig = {
-#     "apiKey": "AIzaSyC5_zrlMegCBFXu9ZpbdzntqYQv1_F6cB0",
-#     "authDomain": "cybsec-92fe2.firebaseapp.com",
-#     "projectId": "cybsec-92fe2",
-#     "storageBucket": "cybsec-92fe2.appspot.com",
-#     "messagingSenderId": "393810490063",
-#     "appId": "1:393810490063:web:9a967d479ebdc27ce6bdba",
-#     "measurementId": "G-LGF81WH03N",
-#     "databaseURL" : "https://cybsec-92fe2-default-rtdb.firebaseio.com/"
-# }
 
-# Initialize Firebase
 
 
 vectorizer = TfidfVectorizer()
@@ -143,20 +115,7 @@ def initialize_session_state():
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# def connect_wallet():
-#     st.session_state.wallet_address = st.text_input("Enter your Ethereum wallet address:")
-#     if st.session_state.wallet_address and web3.isAddress(st.session_state.wallet_address):
-#         st.session_state.wallet_connected = True
-#         st.success(f"Wallet connected: {st.session_state.wallet_address}")
-#     else:
-#         st.error("Invalid Ethereum address. Please enter a valid address.")
-#         st.session_state.wallet_connected = False
-#         st.session_state.wallet_address = None
 
-# def disconnect_wallet():
-#     st.session_state.wallet_connected = False
-#     st.session_state.wallet_address = None
-#     st.success("Wallet disconnected successfully.")
 
 def upload_to_ipfs(file):
     try:
@@ -198,21 +157,7 @@ def get_ipfs_files():
         st.error(f"Error fetching IPFS files: {str(e)}")
         return []
     
-# def sign_up():
-#     st.subheader("Create New Account")
-#     with st.form("signup_form"):
-#         new_user_email = st.text_input("Email Address", key="signup_email")
-#         new_user_password = st.text_input("Password", type='password', key="signup_password")
-#         submit_button = st.form_submit_button("Sign Up")
-    
-#     if submit_button:
-#         try:
-#             user = auth.create_user_with_email_and_password(new_user_email, new_user_password)
-#             st.success("Account created successfully!")
-#             st.session_state.user = user
-#             st.session_state.authentication_status = True
-#         except Exception as e:
-#             st.error(f"Error: {e}")
+
 def sign_up():
     st.subheader("Create New Account")
     with st.form("signup_form"):
@@ -232,63 +177,6 @@ def sign_up():
         except Exception as e:
             st.error(f"Error during sign up: {str(e)}")
 
-# def sign_in():
-#     st.subheader("Sign In to Existing Account")
-#     with st.form("signin_form"):
-#         user_email = st.text_input("Email Address", key="signin_email")
-#         user_password = st.text_input("Password", type='password', key="signin_password")
-#         submit_button = st.form_submit_button("Sign In")
-    
-#     if submit_button:
-#         try:
-#             user = auth.sign_in_with_email_and_password(user_email, user_password)
-#             st.success("Signed in successfully!")
-#             st.session_state.user = user
-#             st.session_state.authentication_status = True
-#             load_canvas_data()  
-#         except Exception as e:
-#             st.error(f"Error: {e}")
-# def sign_in():
-#     st.subheader("Sign In to Existing Account")
-#     with st.form("signin_form"):
-#         user_email = st.text_input("Email Address", key="signin_email")
-#         user_password = st.text_input("Password", type='password', key="signin_password")
-#         submit_button = st.form_submit_button("Sign In")
-   
-#     if submit_button:
-#         try:
-#             # Sign in with email and password
-#             user = auth.get_user_by_email(user_email)
-#             id_token = auth.sign_in_with_email_and_password(user_email, user_password)
-#             decoded_token = auth.verify_id_token(id_token)
-#             user_id = decoded_token['uid']
-#             st.success("Signed in successfully!")
-#             st.session_state.user = decoded_token
-#             st.session_state.authentication_status = True
-#             load_canvas_data()  
-#         except Exception as e:
-#             st.error(f"Error during sign in: {str(e)}") 
-
-# def sign_in():
-#     st.subheader("Sign In to Existing Account")
-#     with st.form("signin_form"):
-#         user_email = st.text_input("Email Address", key="signin_email")
-#         user_password = st.text_input("Password", type='password', key="signin_password")
-#         submit_button = st.form_submit_button("Sign In")
-
-#     if submit_button:
-#         try:
-#             # Sign in with email and password
-#             user = auth.sign_in_with_email_and_password(user_email, user_password)
-#             id_token = user['idToken']
-#             decoded_token = auth.verify_id_token(id_token)
-#             user_id = decoded_token['uid']
-#             st.success("Signed in successfully!")
-#             st.session_state.user = decoded_token
-#             st.session_state.authentication_status = True
-#             load_canvas_data()  
-#         except Exception as e:
-#             st.error(f"Error during sign in: {str(e)}") 
 
 def sign_in():
     st.subheader("Sign In to Existing Account")
@@ -338,13 +226,7 @@ def sign_in():
         except Exception as e:
             st.error(f"Error during sign in: {str(e)}")
 
-# def sign_out():
-#     st.session_state.user = None
-#     st.session_state.authentication_status = None
-#     st.session_state.cards = []
-#     st.session_state.connections = []
-#     st.session_state.graph = nx.Graph()
-#     st.success("Signed out successfully!")
+
 def sign_out():
     st.session_state.user = None
     st.session_state.authentication_status = None
@@ -354,12 +236,6 @@ def sign_out():
     st.success("Signed out successfully!")
 
 
-# def google_sign_in():
-#     st.subheader("Sign In with Google")
-#     auth_url = f"https://accounts.google.com/o/oauth2/v2/auth?client_id={firebaseConfig['clientId']}&redirect_uri={firebaseConfig['redirectUri']}&response_type=code&scope=email%20profile"
-    
-#     if st.button("Sign In with Google"):
-#         st.markdown(f'<a href="{auth_url}" target="_self">Click here to sign in with Google</a>', unsafe_allow_html=True)
 
 def save_canvas_data(canvas_data):
     if st.session_state.user:
@@ -1858,21 +1734,7 @@ def generate_pdf_report(df, insights):
     # Visualizations
     story.append(Paragraph("Data Visualizations", styles['Heading2']))
     
-    # Hourly Activity
-    # plt.figure(figsize=(8, 4))
-    # df['Hour'] = pd.to_datetime(df['Start Time']).dt.hour
-    # hourly_activity = df['Hour'].value_counts().sort_index()
-    # sns.lineplot(x=hourly_activity.index, y=hourly_activity.values)
-    # plt.title("Hourly Activity")
-    # plt.xlabel("Hour of Day")
-    # plt.ylabel("Number of Sessions")
-    # img_buffer = BytesIO()
-    # plt.savefig(img_buffer, format='png')
-    # img_buffer.seek(0)
-    # story.append(Image(img_buffer, width=400, height=200))
-    # story.append(Spacer(1, 12))
-    
-    # Call Duration Distribution
+
     plt.figure(figsize=(8, 4))
     sns.histplot(df['Flow.Duration'], bins=50)
     plt.title("Call Duration Distribution")
